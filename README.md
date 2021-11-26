@@ -1,1 +1,0 @@
-# Rick-n-Morty
