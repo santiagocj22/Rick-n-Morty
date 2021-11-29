@@ -1,11 +1,21 @@
 import "./App.css";
-import Header from "../components/Header";
+import Home from "../components/Home";
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import Character from "../components/Character";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path ='/' element={<Home/>}/>
+        <Route path=':id'element={<Character/>}/>
+      </Routes>
+    </BrowserRouter>
+ 
   );
 }
 

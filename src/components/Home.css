@@ -1,6 +1,6 @@
-.container {
+/* .container {
   background-color: cadetblue;
-}
+} */
 .cards {
   display: flex;
   flex-direction: row;
@@ -22,7 +22,7 @@
   border-radius: 5px;
   min-width: 300px;
 }
-.header-input {
+.home-input {
   text-align: center;
   background-color: whitesmoke;
   border: none;
@@ -31,7 +31,7 @@
   height: 20px;
   margin: 10px;
 }
-.header-button {
+.home-button {
   display: inline-block;
   padding: 0.3em 1.2em;
   margin: 0 0.3em 0.3em 0;
