@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
@@ -6,6 +6,14 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const [input, setInput] = useState("");
   const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://rickandmortyapi.com/api/character/")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data.results);
+      });
+  }, []);
 
   const apiCall = () => {
     fetch(`https://rickandmortyapi.com/api/character/?name=${input}`)
@@ -48,12 +56,12 @@ const Home = () => {
           return (
             <tbody key={"char_" + index}>
               <tr>
-                <Link to={`/${character.id}`}>  
-                  <td>{character.id}</td>
-                </Link>
-                  <td>{character.name}</td>
-                  <td>{character.location.name}</td>
-                  <td>{character.status}</td>
+                <td>
+                  <Link to={`/${character.id}`}>{character.id}</Link>
+                </td>
+                <td>{character.name}</td>
+                <td>{character.location.name}</td>
+                <td>{character.status}</td>
               </tr>
             </tbody>
           );

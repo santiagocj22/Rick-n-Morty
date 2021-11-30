@@ -3,37 +3,25 @@ import { useParams } from "react-router-dom";
 
 const Character = () => {
   const { id } = useParams();
-  const [character, setCharacter] = useState([]);
+  const [character, setCharacter] = useState({ location: {} });
 
   useEffect(() => {
-      fetch(`https://rickandmortyapi.com/api/character/${id}`)
-      .then(response => response.json())
-      .then(data => setCharacter(data))
-  },[id]);
+    fetch(`https://rickandmortyapi.com/api/character/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setCharacter(data);
+      });
+  }, [id]);
+
   return (
     <div className="cards">
-        <div className="card">
-          <img
-            className="card-img"
-            src={character.image}
-            alt={character.name}
-          />
-          <h2>{character.name}</h2>
-          <span>first see in: {character.location}</span>
-          <span>Status: {character.status}</span>
-        </div>
-  </div>
+      <div className="card">
+        <img className="card-img" src={character.image} alt={character.name} />
+        <h2>{character.name}</h2>
+        <span>first seen in: {character.location.name}</span>
+        <span>Status: {character.status}</span>
+      </div>
+    </div>
   );
 };
 export default Character;
-
-// useEffect(() => {
-//     const infoAPI =  () => {
-//       const response = fetch(
-//         `https://rickandmortyapi.com/api/character/${id}`
-//       );
-//       const data = response.json();
-//       setCharacter(data);
-//     };
-//     infoAPI();
-//   }, [id]);
