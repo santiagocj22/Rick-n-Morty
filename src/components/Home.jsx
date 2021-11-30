@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import Table from "./Table";
+import Pagination from "./Pagination";
 
 const Home = () => {
   const [input, setInput] = useState("");
   const [data, setData] = useState([]);
+  const [pages, setPages] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character/")
@@ -22,6 +24,11 @@ const Home = () => {
         setData(data.results);
       });
   };
+  const indexOfLastpage = pages * itemsPerPage;
+  const indexOfFirstPage = indexOfLastpage - itemsPerPage;
+  const currentPage = data.slice(indexOfFirstPage, indexOfLastpage);
+
+  const goToPage = (pageNumber) => setPages(pageNumber);
 
   return (
     <div className="container">
@@ -34,6 +41,7 @@ const Home = () => {
         }}
       />
       <button
+        disabled={!input}
         className="home-button"
         onClick={() => {
           apiCall(input);
@@ -41,32 +49,12 @@ const Home = () => {
       >
         Search
       </button>
-
-      <table className="table table-striped table-hover table-bordered">
-        <thead className="table-active">
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Firs see in</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-
-        {data.map((character, index) => {
-          return (
-            <tbody key={"char_" + index}>
-              <tr>
-                <td>
-                  <Link to={`/${character.id}`}>{character.id}</Link>
-                </td>
-                <td>{character.name}</td>
-                <td>{character.location.name}</td>
-                <td>{character.status}</td>
-              </tr>
-            </tbody>
-          );
-        })}
-      </table>
+      <Table data={currentPage} />
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        totalItems={data.length}
+        goToPage={goToPage}
+      />
     </div>
   );
 };
