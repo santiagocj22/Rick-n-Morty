@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./Character.css";
+import { Link } from "react-router-dom";
 
 const Character = () => {
   const { id } = useParams();
@@ -13,7 +14,6 @@ const Character = () => {
         setCharacter(data);
       });
   }, [id]);
-
   return (
     <div className="cards">
       <div className="card">
@@ -22,6 +22,7 @@ const Character = () => {
         <span>first seen in: {character.location.name}</span>
         <span>Status: {character.status}</span>
       </div>
+      <Link className="anchor" to={"/"}>Back to Home</Link>
     </div>
   );
 };
