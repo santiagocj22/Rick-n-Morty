@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import Table from "./Table";
 import Pagination from "./Pagination";
+
+
+
 const initialUrl = "https://rickandmortyapi.com/api/character/";
 const Home = () => {
   const [input, setInput] = useState("");
   const [data, setData] = useState([]);
-  const [pages, setPages] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [pages, setPages] = useState(21);
+  const [itemsPerPage] = useState(20);
   const [info, setInfo] = useState({});
 
   const fetchCharacters = (url) => {
@@ -23,19 +26,16 @@ const Home = () => {
   }, []);
 
   const apiCall = () => {
-    fetch(`https://rickandmortyapi.com/api/character/?name=${input}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data.results);
-        setInfo(data.info);
-      });
+    fetchCharacters(`https://rickandmortyapi.com/api/character/?name=${input}`)
   };
   const indexOfLastpage = pages * itemsPerPage;
   const indexOfFirstPage = indexOfLastpage - itemsPerPage;
   const currentPage = data.slice(indexOfFirstPage, indexOfLastpage);
 
-  const goToPage = (pageNumber) => setPages(pageNumber);
-
+  const goToPage = (id) => {
+    setPages(id)
+    fetchCharacters(`https://rickandmortyapi.com/api/character/?page=${pages}&name=${input}`)
+  }
   const onPrevious = () => {
     fetchCharacters(info.prev);
   };
@@ -65,12 +65,14 @@ const Home = () => {
       <Table data={currentPage} />
       <Pagination
         itemsPerPage={itemsPerPage}
-        totalItems={data.length}
+        totalItems={info.count}
+        // totalItems={data.length}
         goToPage={goToPage}
         prev={info.prev}
         next={info.next}
         onNext={onNext}
         onPrevious={onPrevious}
+        currentPage={currentPage}
       />
     </div>
   );
