@@ -22,7 +22,9 @@ const Character = () => {
         <span>first seen in: {character.location.name}</span>
         <span>Status: {character.status}</span>
       </div>
-      <Link className="anchor" to={"/"}>Back to Home</Link>
+      <Link className="anchor" to={"/"}>
+        Back to Home
+      </Link>
     </div>
   );
 };

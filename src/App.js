@@ -1,14 +1,16 @@
 import "./App.css";
-import Home from "../components/Home";
+import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Character from "../components/Character";
+import Character from "./pages/Character";
+import Locations from "./pages/Locations";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path=":id" element={<Character />} />
+        <Route path="locations/" element={<Locations />} />
+        <Route path="/character/:id" element={<Character />} />
       </Routes>
     </BrowserRouter>
   );
